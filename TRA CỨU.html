@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tra Cứu Điểm Thi Tốt Nghiệp THPT 2024</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-100 font-sans">
+  <!-- Header -->
+<div class="bg-blue-700 text-white p-4">
+  <div class="max-w-6xl mx-auto flex items-center space-x-4">
+    <!-- Logo -->
+    <img src="logo-01.png" 
+         alt="Logo" class="w-12 h-12">
+
+    <!-- Văn bản -->
+    <div>
+      <h1 class="text-xl font-bold uppercase">Sở Giáo dục và Đào tạo Thành phố Hồ Chí Minh</h1>
+      <h2 class="text-lg font-semibold">TRANG TRA CỨU ĐIỂM THI THỬ TỐT NGHIỆP THPT NĂM 2025</h2>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Main Container -->
+  <div class="max-w-5xl mx-auto bg-white p-6 mt-4 shadow-lg rounded-lg">
+    <h3 class="text-center text-xl font-bold text-red-600 uppercase mb-4">
+      TRA CỨU ĐIỂM THI THỬ TỐT NGHIỆP THPT NĂM 2025
+    </h3>
+
+    <p class="text-center text-gray-700 mb-4">
+      Nhập <strong>Số báo danh</strong> và <strong>Số CCCD</strong> để tra cứu điểm thi.
+    </p>
+
+    <!-- Form -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div>
+        <label for="sbd" class="block text-sm font-semibold mb-1">Số báo danh:</label>
+        <input type="text" id="sbd" class="w-full border px-3 py-2 rounded" placeholder="Nhập SBD">
+      </div>
+      <div>
+        <label for="cccd" class="block text-sm font-semibold mb-1">Số CCCD:</label>
+        <input type="text" id="cccd" class="w-full border px-3 py-2 rounded" placeholder="Nhập CCCD">
+      </div>
+      <div class="flex items-end">
+        <button id="searchBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
+          Tra cứu
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="hidden text-center text-blue-600 font-semibold my-4">
+      <svg class="animate-spin h-6 w-6 inline-block mr-2 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+      </svg>
+      Đang tra cứu...
+    </div>
+
+    <!-- Kết quả -->
+    <div id="result" class="mt-2"></div>
+
+    <!-- Kết quả bảng điểm -->
+    <div id="defaultResult" class="hidden mt-4">
+      <div class="text-lg font-bold mb-2">
+        Thí sinh: <span id="hoten" class="text-gray-800">...</span> – Lớp <span id="lop" class="text-gray-800">...</span>
+      </div>
+
+      <table class="w-full table-auto border text-sm text-center">
+        <thead class="bg-blue-600 text-white">
+          <tr>
+            <th class="border px-2 py-1">STT</th>
+            <th class="border px-2 py-1">SBD</th>
+            <th class="border px-2 py-1">Họ và tên</th>
+            <th class="border px-2 py-1">Ngữ Văn</th>
+            <th class="border px-2 py-1">Toán</th>
+            <th class="border px-2 py-1">Môn 1</th>
+            <th class="border px-2 py-1">Môn 2</th>
+            <th class="border px-2 py-1">ĐTBcm</th>
+            <th class="border px-2 py-1">KẾT QUẢ</th>
+          </tr>
+        </thead>
+        <tbody id="scoreTableBody">
+          <!-- Dữ liệu sẽ được chèn bằng JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    document.getElementById('searchBtn').addEventListener('click', function () {
+      const sbd = document.getElementById('sbd').value.trim();
+      const cccd = document.getElementById('cccd').value.trim();
+
+      const allowedSBD = '12020009';
+      const allowedCCCD = '079207017782';
+
+      // Hiển thị spinner
+      document.getElementById('loading').classList.remove('hidden');
+      document.getElementById('result').innerHTML = '';
+      document.getElementById('defaultResult').classList.add('hidden');
+
+      // Mô phỏng xử lý
+      setTimeout(() => {
+        if (sbd === allowedSBD && cccd === allowedCCCD) {
+          const record = {
+            SBD: sbd,
+            Họ_tên: "Lương Đức Dân",
+            Lớp: "12B08",
+            NguVan: "8.3",
+            Toan: "7.1",
+            Mon1: "6.8",
+            Mon2: "7.3",
+            DTBcm: "7.4",
+            KetQua: "ĐẬU"
+          };
+
+          // Cập nhật thông tin
+          document.getElementById('hoten').innerText = record.Họ_tên;
+          document.getElementById('lop').innerText = record.Lớp;
+
+          let rowHTML = `
+            <tr class="bg-gray-50">
+              <td class="border px-2 py-1">1</td>
+              <td class="border px-2 py-1">${record.SBD}</td>
+              <td class="border px-2 py-1">${record.Họ_tên}</td>
+              <td class="border px-2 py-1">${record.NguVan}</td>
+              <td class="border px-2 py-1">${record.Toan}</td>
+              <td class="border px-2 py-1">${record.Mon1}</td>
+              <td class="border px-2 py-1">${record.Mon2}</td>
+              <td class="border px-2 py-1">${record.DTBcm}</td>
+              <td class="border px-2 py-1 font-semibold text-green-600">${record.KetQua}</td>
+            </tr>
+          `;
+
+          document.getElementById('scoreTableBody').innerHTML = rowHTML;
+          document.getElementById('defaultResult').classList.remove('hidden');
+          document.getElementById('loading').classList.add('hidden');
+        } else {
+          document.getElementById('loading').classList.add('hidden');
+          document.getElementById('result').innerHTML = `<p class="text-red-600 text-center font-semibold">Không tìm thấy kết quả. Vui lòng kiểm tra lại SBD và CCCD.</p>`;
+        }
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
